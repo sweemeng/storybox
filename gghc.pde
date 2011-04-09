@@ -1,17 +1,14 @@
 #include <LCD4Bit_mod.h> 
 #include <EEPROM.h>
+#include <Button.h>
 //create object to control an LCD.  
 //number of lines in display=1
 LCD4Bit_mod lcd = LCD4Bit_mod(2); 
+Button button = Button(2,PULLDOWN);
 
-
-int  adc_key_val[5] ={30, 150, 360, 535, 760 };
-int NUM_KEYS = 5;
-int adc_key_in;
-int key=-1;
-int oldkey=-1;
 long randno;
 int EEPROM_SIZE = 1024;
+
 void setup() { 
   pinMode(13, OUTPUT);  //we'll use the debug LED to output a heartbeat
 
@@ -24,38 +21,17 @@ void setup() {
 }
 
 void loop(){
-  adc_key_in = analogRead(0);
-  key = get_key(adc_key_in);
-  if(key != oldkey){
-    delay(50);
-    adc_key_in = analogRead(0);
-    key = get_key(adc_key_in);
-    if(key != oldkey){
-      oldkey = key;
-      if(key >= 0){
+  if(button.isPressed()){
+	digitalWrite(13,HIGH);
+        digitalWrite(10,HIGH);
+        lcd.clear();
+        lcd.printIn("Hello");
         randno = random(7);
         read_word(randno);
-      }
-    }
+  }else{
+	digitalWrite(13,LOW);
+        digitalWrite(10,LOW);
   }
-}
-
-int get_key(unsigned int input)
-{
-  int k;
-    
-  for (k = 0; k < NUM_KEYS; k++)
-  {
-    if (input < adc_key_val[k])
-    {     
-      return k;
-    }
-  }
-    
-  if (k >= NUM_KEYS)
-      k = -1;     // No valid key pressed
-    
-  return k;
 }
 
 void load_word(){
