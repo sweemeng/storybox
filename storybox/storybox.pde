@@ -1,9 +1,12 @@
 #include <LCD4Bit_mod.h> 
 #include <EEPROM.h>
 #include <Button.h>
+#include <WordStorage.h>
+#include <TrueRandom.h>
 
 LCD4Bit_mod lcd = LCD4Bit_mod(2); 
 Button button = Button(2,PULLDOWN);
+WordStorage storage;
 
 long randno;
 int EEPROM_SIZE = 512;
@@ -25,8 +28,8 @@ void loop(){
   if(button.isPressed()){
 	digitalWrite(13,HIGH);
         digitalWrite(10,HIGH);
-        randno = random(SIZE);
-        words = get_char(randno);
+        randno = TrueRandom.random(SIZE);
+        
         Serial.println(randno);
         print_clear();
         get_word(randno);
@@ -41,7 +44,7 @@ void load_word(int c){
   if(SIZE > EEPROM_SIZE){
     SIZE = EEPROM_SIZE;
   }
-  EEPROM.write(SIZE,c);
+  storage.write(SIZE,c);
   SIZE++;
   
 }
@@ -67,7 +70,7 @@ int seek_delimiter(int pos){
     if(i > SIZE){
       i = 0;
     }
-    c = get_char(i);
+    c = storage.read(i);
     *check = c;
     if(strcmp(check,":")==0){
       new_pos = i + 1;
@@ -79,11 +82,6 @@ int seek_delimiter(int pos){
   return new_pos;
 }
 
-char get_char(int pos){
-  int letter = EEPROM.read(pos);
-  return (char)letter;
-}
-
 void get_word(int pos){
   pos = seek_delimiter(pos);
   
@@ -91,7 +89,7 @@ void get_word(int pos){
   char *check;
   char c;
   while(1){
-    c = get_char(pos);
+    c = storage.read(pos);
     *check = c;
     if(strcmp(check,":")==0){
       
