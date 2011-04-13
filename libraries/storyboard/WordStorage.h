@@ -7,7 +7,9 @@ class WordStorage{
     public:
         WordStorage();
         char read(int);
-        void write(int,int); 
+        void write(int,int);
+        int read_int(int);
+        byte read_byte(int); 
 };
 
 #endif
