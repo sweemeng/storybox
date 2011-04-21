@@ -6,7 +6,7 @@ This is Hackerspacekl Entry to the Great Global Hackerspace Challenge.
 Software requirement
 
 Arduino
-   1. Button library - http://www.arduino.cc/playground/Code/Button#Download
+   1. Bounce library - http://www.arduino.cc/playground/Code/Bounce
    2. Modified 4 bit LCD library - http://www.nuelectronics.com/download/projects/LCD4Bit_mod.zip
    3. TrueRandom Random No Generator - http://code.google.com/p/tinkerit/wiki/TrueRandom
    
