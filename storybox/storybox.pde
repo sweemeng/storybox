@@ -1,11 +1,17 @@
 #include <LCD4Bit_mod.h> 
 #include <EEPROM.h>
-#include <Button.h>
+
 #include <WordStorage.h>
 #include <TrueRandom.h>
+#include <Bounce.h>
+
+#define button1 2
+#define lcdBacklit 3
+#define buzzer 10
+#define statusLed 13
 
 LCD4Bit_mod lcd = LCD4Bit_mod(2); 
-Button button = Button(2,PULLDOWN);
+Bounce bouncer = Bounce(button1,50);
 WordStorage storage;
 
 long randno;
@@ -20,14 +26,20 @@ void setup() {
   randomSeed(analogRead(0));
   Serial.begin(9600);
   init_word();
+  pinMode(statusLed,OUTPUT);
+  pinMode(buzzer,OUTPUT);
+  pinMode(button1,INPUT);
+  pinMode(lcdBacklit,OUTPUT);
 }
 
 void loop(){
+  bouncer.update();
+  int value = bouncer.read()
   lcd.clear();
   char words;
-  if(button.isPressed()){
-	digitalWrite(13,HIGH);
-        digitalWrite(10,HIGH);
+  if(value == HIGH){
+	digitalWrite(statusLed,HIGH);
+        digitalWrite(buzzer,HIGH);
         randno = TrueRandom.random(SIZE);
         
         Serial.println(randno);
@@ -35,8 +47,8 @@ void loop(){
         get_word(randno);
         delay(500);
   }else{
-	digitalWrite(13,LOW);
-        digitalWrite(10,LOW);
+	digitalWrite(statusLed,LOW);
+        digitalWrite(buzzer,LOW);
   }
 }
 
