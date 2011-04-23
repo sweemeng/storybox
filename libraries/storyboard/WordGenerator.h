@@ -12,7 +12,7 @@ class WordGenerator{
         int byte_to_int(byte *);
         void get_segment(int);
         int get_delimiter(int);
-        void word_select(char *);
+        char *word_select();
         int get_segment_begin();
         int get_segment_end();
         void put_storage(int,int);

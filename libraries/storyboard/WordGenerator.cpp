@@ -64,8 +64,7 @@ int WordGenerator::get_delimiter(int pos){
     return p;
 }
 
-void WordGenerator::word_select(char *word_selected){
-    free(word_selected);
+char *WordGenerator::word_select(){
     int word_start = TrueRandom.random(this->segment_begin,this->segment_end);
     word_start = this->get_delimiter(word_start);
     if(word_start == this->segment_end){
@@ -83,14 +82,18 @@ void WordGenerator::word_select(char *word_selected){
     //Serial.println(word_size);
     char *s_word;
     s_word = (char *)malloc(word_size * sizeof(char));
+    int count = 0;
+    
     for(int i = word_start;i < word_end;i++){
-        *s_word = storage.read(i);
-        //Serial.println(*s_word);
-        s_word++;
+        s_word[count] = storage.read(i);
+        //s_word++;
+        count++;
+        if(count == word_size){
+            break;
+        }
         //delay(500);
     }
-    word_selected = s_word;
-    Serial.println(word_selected);
+    return s_word;
 }
 
 int WordGenerator::get_segment_begin(){

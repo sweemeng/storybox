@@ -34,7 +34,7 @@ void setup() {
 
 void loop(){
   bouncer.update();
-  int value = bouncer.read()
+  int value = bouncer.read();
   lcd.clear();
   char words;
   if(value == HIGH){
