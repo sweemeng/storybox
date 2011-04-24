@@ -35,35 +35,39 @@ void loop(){
 
   bouncer.update();
   int value = bouncer.read();
-  lcd.clear();
+
   data_load();
+  //analogWrite(lcdBacklit,15);
   if(value == HIGH){
-        int segment = TrueRandom.random(0,7);
-	digitalWrite(statusLed,HIGH);
-        digitalWrite(buzzer,HIGH);
-        generator.get_segment(segment);
-        free(s_word);
-        *s_word = NULL;
-        s_word = generator.word_select();
-        int s_start = generator.get_word_begin();
-        int s_end = generator.get_word_end();
+    lcd.clear();
+    int segment = TrueRandom.random(0,7);
+    digitalWrite(statusLed,HIGH);
+    digitalWrite(buzzer,HIGH);
+
+    generator.get_segment(segment);
+
+    free(s_word);
+    *s_word = NULL;
+    s_word = generator.word_select();
+
+    int s_start = generator.get_word_begin();
+    int s_end = generator.get_word_end();
         
-        int l_cursor = 0;
+    int l_cursor = 0;
         
-        for(int i = s_start+1;i<s_end;i++){
-          lcd.cursorTo(1,l_cursor);
-          char letter = generator.get_storage(i);
-          lcd.printIn(&letter);
-          Serial.write(letter);
-          l_cursor++;
-        }
-        Serial.println(" ");
-        
-        
-        
+    for(int i = s_start+1;i<s_end;i++){
+      lcd.cursorTo(1,l_cursor);
+      char letter = generator.get_storage(i);
+      lcd.print(letter);
+      Serial.write(letter);
+      l_cursor++;
+    }
+    
+    Serial.println(" ");
+    
   }else{
-	digitalWrite(statusLed,LOW);
-        digitalWrite(buzzer,LOW);
+    digitalWrite(statusLed,LOW);
+    digitalWrite(buzzer,LOW);
   }
 }
 
