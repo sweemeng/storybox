@@ -17,6 +17,8 @@ class WordGenerator{
         int get_segment_end();
         void put_storage(int,int);
         char get_storage(int);
+        int get_word_begin();
+        int get_word_end();
     private:
         int begin;
         int end;

@@ -51,8 +51,6 @@ int WordGenerator::get_delimiter(int pos){
        p = p + 1;
     }
     check = this->storage.read(p);
-    //Serial.println(p);
-    //Serial.println(delimiter);
     while(check != ':'){
         if(p > this->segment_end){
             p = this->begin + 1;
@@ -60,7 +58,6 @@ int WordGenerator::get_delimiter(int pos){
         p++;
         check = this->storage.read(p);
     }
-    //Serial.println(check);
     return p;
 }
 
@@ -70,34 +67,23 @@ char *WordGenerator::word_select(){
     if(word_start == this->segment_end){
         word_start = this->segment_begin;
     }
-    Serial.println(word_start);
     this->begin = word_start;
     int word_end = this->get_delimiter(word_start+1);
-    //Serial.println(this->storage.read(word_start));
-    //Serial.println(this->storage.read(word_end));
     word_start = word_start + 1;
     word_end = word_end;
     this->end = word_end;
-    Serial.println(word_end);
     int word_size = word_end - word_start;
-    //Serial.println(word_size);
     char *s_word;
     s_word = (char *)malloc(word_size * sizeof(char));
     int count = 0;
     
     for(int i = word_start;i < word_end;i++){
         s_word[count] = storage.read(i);
-        Serial.write(s_word[count]); 
-        //s_word++;
         count++;
-        if(count == word_size){
-            
-             
+        if(count == word_size){             
             break;
         }
-        //delay(500);
     }
-    Serial.println(sizeof(*s_word));
     return s_word;
 }
 
@@ -115,4 +101,13 @@ void WordGenerator::put_storage(int pos,int data){
 
 char WordGenerator::get_storage(int pos){
     return this->storage.read(pos);
+}
+
+int WordGenerator::get_word_begin(){
+
+    return this->begin;
+}
+
+int WordGenerator::get_word_end(){
+    return this->end;
 }

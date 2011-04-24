@@ -41,14 +41,25 @@ void loop(){
         int segment = TrueRandom.random(0,7);
 	digitalWrite(statusLed,HIGH);
         digitalWrite(buzzer,HIGH);
-        generator.get_segment(0);
+        generator.get_segment(segment);
         free(s_word);
         *s_word = NULL;
         s_word = generator.word_select();
-        lcd.printIn(s_word);
-
-        Serial.println(s_word);
-        delay(500);
+        int s_start = generator.get_word_begin();
+        int s_end = generator.get_word_end();
+        
+        int l_cursor = 0;
+        
+        for(int i = s_start+1;i<s_end;i++){
+          lcd.cursorTo(1,l_cursor);
+          char letter = generator.get_storage(i);
+          lcd.printIn(&letter);
+          Serial.write(letter);
+          l_cursor++;
+        }
+        Serial.println(" ");
+        
+        
         
   }else{
 	digitalWrite(statusLed,LOW);
@@ -60,7 +71,7 @@ void data_load(){
   storage_size = 0;
   int value;
   value = Serial.read();
-  //Serial.write(value);
+
   if(value == 60){
     while(value != 62){
       value = Serial.read();
@@ -73,11 +84,5 @@ void data_load(){
     }
   }
   generator.put_storage(0,0);  
-  if(storage_size > 0){
-    Serial.println(" ");
-    for(int i=0;i<storage_size;i++){
-      Serial.print((char)generator.get_storage(i));
-    }
-  }
 
 }

@@ -35,7 +35,6 @@ byte WordStorage::read_byte(unsigned int eeaddress){
     Wire.requestFrom(this->deviceaddress,1);
     if (Wire.available()){
         rdata = Wire.receive();
-        Serial.println("reading");
     }
     return rdata;
 
