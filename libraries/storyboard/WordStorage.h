@@ -1,15 +1,17 @@
 #ifndef WORDSTORAGE_H
 #define WORDSTORAGE_H
 #include "WProgram.h"
-#include <EEPROM.h>
+#include <Wire.h>
  
 class WordStorage{
     public:
         WordStorage();
-        char read(int);
-        void write(int,int);
-        int read_int(int);
-        byte read_byte(int); 
+        char read(unsigned int);
+        void write(unsigned int,int);
+        int read_int(unsigned int);
+        byte read_byte(unsigned int);
+    private:
+        int deviceaddress; 
 };
 
 #endif
