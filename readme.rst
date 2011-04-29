@@ -7,8 +7,7 @@ Software requirement
 
 Arduino
    1. Bounce library - http://www.arduino.cc/playground/Code/Bounce
-   2. Modified 4 bit LCD library - http://www.nuelectronics.com/download/projects/LCD4Bit_mod.zip
-   3. TrueRandom Random No Generator - http://code.google.com/p/tinkerit/wiki/TrueRandom
+   2. TrueRandom Random No Generator - http://code.google.com/p/tinkerit/wiki/TrueRandom
    
 Uploader(Incomplete!!!!)
    1. Python - http://python.org/download/

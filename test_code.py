@@ -29,7 +29,7 @@ def send_data(data):
     for i in tmp:
         s.write(i)
         v = s.read()
-        if i != v:
+        if i != v: 
             if(ord(v) in range(0,10)):
                 if(ord(i) in range(0,10)):
                     print '%s:%s' % (str(ord(i)),str(ord(v)))
