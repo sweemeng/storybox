@@ -1,4 +1,4 @@
-#include <LCD4Bit_mod.h> 
+#include <LiquidCrystal.h> 
 #include <Wire.h>
 
 #include <WordStorage.h>
@@ -11,7 +11,7 @@
 #define buzzer 10
 #define statusLed 13
 
-LCD4Bit_mod lcd = LCD4Bit_mod(2); 
+LiquidCrystal lcd(12,11,7,6,5,4);
 Bounce bouncer = Bounce(button1,50);
 
 WordGenerator generator(7);
@@ -20,15 +20,15 @@ char *s_word;
 void setup() { 
   pinMode(13, OUTPUT);  //we'll use the debug LED to output a heartbeat
 
-  lcd.init();
-  lcd.clear();
+  lcd.begin(16,2);
   randomSeed(analogRead(0));
   Serial.begin(9600);
-
+  lcd.print("ping");
   pinMode(statusLed,OUTPUT);
   pinMode(buzzer,OUTPUT);
   pinMode(button1,INPUT);
   pinMode(lcdBacklit,OUTPUT);
+  digitalWrite(lcdBacklit,HIGH);
 }
 
 void loop(){
@@ -37,8 +37,10 @@ void loop(){
   int value = bouncer.read();
 
   data_load();
+  
   //analogWrite(lcdBacklit,15);
   if(value == HIGH){
+    Serial.print('ping');
     lcd.clear();
     int segment = TrueRandom.random(0,7);
     digitalWrite(statusLed,HIGH);
@@ -56,7 +58,7 @@ void loop(){
     int l_cursor = 0;
         
     for(int i = s_start+1;i<s_end;i++){
-      lcd.cursorTo(1,l_cursor);
+      lcd.setCursor(l_cursor,0);
       char letter = generator.get_storage(i);
       lcd.print(letter);
       Serial.write(letter);
@@ -88,5 +90,7 @@ void data_load(){
     }
   }
   generator.put_storage(0,0);  
-
+  for(int i=0;i<storage_size;i++){
+    Serial.print(generator.get_storage(i));
+  }  
 }
