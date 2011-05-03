@@ -18,7 +18,7 @@ void WordStorage::write(unsigned int eeaddress,int data){
     Wire.send((int)(eeaddress & 0xFF)); // LSB
     Wire.send(rdata);
     Wire.endTransmission();
-    delay(100);
+    delay(20);
 }
 
 int WordStorage::read_int(unsigned int eeaddress){
