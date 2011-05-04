@@ -25,6 +25,17 @@ run python test_code.py this should upload the data to the storybox.
 Hardware
 ==========
 
+Arduino shield
+   1. 16x2 Character LCD: displaying the random word.
+   2. Momentary button: the only button for user interaction.
+   3. Buzzer: acknowledging that the user has pressed the button.
+   4. I2C EEPROM: storing a list of word.
+   5. Preset 1: adjusting brightness of the LCD backlit.
+   6. Preset 2: adjusting contrast of the LCD display.
+
+The schematic (.sch) and PCB layout (.brd) are drawn in EAGLE Layout Editor
+
+
 Bill Of Material
 =================
 
