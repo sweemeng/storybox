@@ -13,7 +13,15 @@ Uploader(Incomplete!!!!)
    1. Python - http://python.org/download/
    2. Pyserial - http://pyserial.sourceforge.net/
    3. Pygtk - http://www.pygtk.org/
-  
+
+Usage(Testing)
+===============
+
+Copy the folder storybox in libraries to arduino libraries folder, 
+the using the arduino IDE to open storybox.pde. and compile and upload.
+
+run python test_code.py this should upload the data to the storybox. 
+
 Hardware
 ==========
 

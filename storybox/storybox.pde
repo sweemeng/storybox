@@ -23,7 +23,7 @@ void setup() {
   lcd.begin(16,2);
   randomSeed(analogRead(0));
   Serial.begin(9600);
-  lcd.print("ping");
+  lcd.print("HSKL StoryBox");
   pinMode(statusLed,OUTPUT);
   pinMode(buzzer,OUTPUT);
   pinMode(button1,INPUT);
